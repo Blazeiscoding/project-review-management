@@ -6,7 +6,7 @@ import { getAccessLinks } from '@/lib/actions/access.actions';
 import { getPendingReviews } from '@/lib/actions/review.actions';
 import { Navbar, Footer } from '@/components/shared';
 import { CourseForm } from '@/components/courses';
-import { ReviewCard } from '@/components/reviews';
+import { ReviewCard, ModerateButton } from '@/components/reviews';
 import AccessLinkManager from '@/components/courses/AccessLinkManager';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -19,32 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { BookOpen, Star, Users, Plus, Eye, CheckCircle, XCircle } from 'lucide-react';
-import { moderateReview } from '@/lib/actions/review.actions';
-
-async function ModerateButton({ reviewId, action }: { reviewId: string; action: 'approved' | 'rejected' }) {
-  async function handleModerate() {
-    'use server';
-    await moderateReview(reviewId, action);
-  }
-
-  return (
-    <form action={handleModerate}>
-      <Button 
-        type="submit"
-        size="sm" 
-        variant={action === 'approved' ? 'default' : 'destructive'}
-        className={action === 'approved' ? 'bg-green-600 hover:bg-green-700' : ''}
-      >
-        {action === 'approved' ? (
-          <><CheckCircle className="h-4 w-4 mr-1" /> Approve</>
-        ) : (
-          <><XCircle className="h-4 w-4 mr-1" /> Reject</>
-        )}
-      </Button>
-    </form>
-  );
-}
+import { BookOpen, Star, Users, Plus, Eye, CheckCircle } from 'lucide-react';
 
 export default async function CreatorDashboard() {
   const user = await getCurrentUser();

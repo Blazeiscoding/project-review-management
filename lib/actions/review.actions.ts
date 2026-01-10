@@ -242,7 +242,7 @@ export async function moderateReview(
       return { error: 'User not found' };
     }
 
-    const review = await Review.findById(reviewId).populate('course');
+    const review = await Review.findById(reviewId);
     
     if (!review) {
       return { error: 'Review not found' };
@@ -260,14 +260,15 @@ export async function moderateReview(
     review.status = status;
     await review.save();
 
-    // Update course ratings if approved
+    // Update course ratings if approved - use course._id, not populated review.course
+    const courseId = course?._id?.toString() || review.course.toString();
     if (status === 'approved') {
-      await updateCourseRatings(review.course.toString());
+      await updateCourseRatings(courseId);
     }
 
     revalidatePath('/creator');
     revalidatePath('/admin');
-    revalidatePath(`/courses/${review.course}`);
+    revalidatePath(`/courses/${courseId}`);
     
     return { success: true };
   } catch (error) {

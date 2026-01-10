@@ -3,7 +3,7 @@ import { getCurrentUser, getAllUsers, updateUserRole } from '@/lib/actions/user.
 import { getAllCourses } from '@/lib/actions/course.actions';
 import { getPendingReviews, moderateReview } from '@/lib/actions/review.actions';
 import { Navbar, Footer } from '@/components/shared';
-import { ReviewCard } from '@/components/reviews';
+import { ReviewCard, ModerateButton } from '@/components/reviews';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -24,7 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Users, BookOpen, Star, Shield, CheckCircle, XCircle } from 'lucide-react';
+import { Users, BookOpen, Star, Shield, CheckCircle } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
 async function RoleSelector({ userId, currentRole }: { userId: string; currentRole: string }) {
@@ -48,30 +48,6 @@ async function RoleSelector({ userId, currentRole }: { userId: string; currentRo
       </Select>
       <Button type="submit" size="sm" className="ml-2 bg-purple-600 hover:bg-purple-700">
         Update
-      </Button>
-    </form>
-  );
-}
-
-async function ModerateButton({ reviewId, action }: { reviewId: string; action: 'approved' | 'rejected' }) {
-  async function handleModerate() {
-    'use server';
-    await moderateReview(reviewId, action);
-  }
-
-  return (
-    <form action={handleModerate}>
-      <Button 
-        type="submit"
-        size="sm" 
-        variant={action === 'approved' ? 'default' : 'destructive'}
-        className={action === 'approved' ? 'bg-green-600 hover:bg-green-700' : ''}
-      >
-        {action === 'approved' ? (
-          <><CheckCircle className="h-4 w-4 mr-1" /> Approve</>
-        ) : (
-          <><XCircle className="h-4 w-4 mr-1" /> Reject</>
-        )}
       </Button>
     </form>
   );
