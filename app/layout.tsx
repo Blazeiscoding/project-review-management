@@ -1,16 +1,16 @@
 import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Manrope, Geist_Mono } from 'next/font/google'
 import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const manrope = Manrope({
+  variable: '--font-sans',
   subsets: ['latin'],
 })
 
 const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+  variable: '--font-mono',
   subsets: ['latin'],
 })
 
@@ -27,8 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <html lang="en" className="dark">
+        <body className={`${manrope.variable} ${geistMono.variable} font-sans antialiased`}>
           {children}
           <Toaster position="top-right" />
         </body>

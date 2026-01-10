@@ -41,13 +41,19 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
-      <Card className="w-full max-w-lg bg-slate-800/50 backdrop-blur-sm border-slate-700">
+    <div className="min-h-screen flex items-center justify-center bg-black p-4 relative overflow-hidden">
+      {/* Subtle grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
+      
+      {/* Orange glow behind card */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] bg-primary/15 blur-[150px] rounded-full pointer-events-none" />
+      
+      <Card className="relative w-full max-w-lg bg-white/[0.03] backdrop-blur-sm border-white/10">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl text-white">
             Welcome, {user?.firstName || 'there'}! 👋
           </CardTitle>
-          <CardDescription className="text-slate-300">
+          <CardDescription className="text-white/60">
             Select your role to get started with Course Reviews
           </CardDescription>
         </CardHeader>
@@ -56,21 +62,21 @@ export default function OnboardingPage() {
             <button
               type="button"
               onClick={() => setRole('student')}
-              className={`p-6 rounded-lg border-2 text-left transition-all duration-200 ${
+              className={`p-6 rounded-xl border-2 text-left transition-all duration-200 ${
                 role === 'student'
-                  ? 'border-purple-500 bg-purple-500/20'
-                  : 'border-slate-600 bg-slate-700/50 hover:border-slate-500'
+                  ? 'border-primary bg-primary/10'
+                  : 'border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.04]'
               }`}
             >
               <div className="flex items-start gap-4">
-                <div className={`p-3 rounded-full ${
-                  role === 'student' ? 'bg-purple-500' : 'bg-slate-600'
+                <div className={`p-3 rounded-xl ${
+                  role === 'student' ? 'bg-primary' : 'bg-white/10'
                 }`}>
-                  <GraduationCap className="h-6 w-6 text-white" />
+                  <GraduationCap className={`h-6 w-6 ${role === 'student' ? 'text-black' : 'text-white'}`} />
                 </div>
                 <div>
                   <h3 className="font-semibold text-white text-lg">Student</h3>
-                  <p className="text-sm text-slate-300 mt-1">
+                  <p className="text-sm text-white/50 mt-1">
                     I want to review courses I&apos;ve taken and help others make informed decisions
                   </p>
                 </div>
@@ -80,21 +86,21 @@ export default function OnboardingPage() {
             <button
               type="button"
               onClick={() => setRole('creator')}
-              className={`p-6 rounded-lg border-2 text-left transition-all duration-200 ${
+              className={`p-6 rounded-xl border-2 text-left transition-all duration-200 ${
                 role === 'creator'
-                  ? 'border-purple-500 bg-purple-500/20'
-                  : 'border-slate-600 bg-slate-700/50 hover:border-slate-500'
+                  ? 'border-primary bg-primary/10'
+                  : 'border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.04]'
               }`}
             >
               <div className="flex items-start gap-4">
-                <div className={`p-3 rounded-full ${
-                  role === 'creator' ? 'bg-purple-500' : 'bg-slate-600'
+                <div className={`p-3 rounded-xl ${
+                  role === 'creator' ? 'bg-primary' : 'bg-white/10'
                 }`}>
-                  <Presentation className="h-6 w-6 text-white" />
+                  <Presentation className={`h-6 w-6 ${role === 'creator' ? 'text-black' : 'text-white'}`} />
                 </div>
                 <div>
                   <h3 className="font-semibold text-white text-lg">Course Creator</h3>
-                  <p className="text-sm text-slate-300 mt-1">
+                  <p className="text-sm text-white/50 mt-1">
                     I create courses and want to collect authentic reviews from my students
                   </p>
                 </div>
@@ -109,7 +115,7 @@ export default function OnboardingPage() {
           <Button
             onClick={handleSubmit}
             disabled={!role || loading}
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+            className="w-full bg-primary hover:bg-primary/90 text-black font-semibold rounded-tr-2xl rounded-bl-2xl rounded-tl-md rounded-br-md"
           >
             {loading ? (
               <>

@@ -36,16 +36,16 @@ async function CourseList({ category, search, page }: {
   if (courses.length === 0) {
     return (
       <div className="text-center py-20">
-        <BookOpen className="h-12 w-12 text-slate-600 mx-auto mb-4" />
+        <BookOpen className="h-12 w-12 text-white/30 mx-auto mb-4" />
         <h3 className="text-xl font-semibold text-white mb-2">No courses found</h3>
-        <p className="text-slate-400">Try adjusting your filters or search terms</p>
+        <p className="text-white/50">Try adjusting your filters or search terms</p>
       </div>
     );
   }
 
   return (
     <div>
-      <p className="text-slate-400 mb-6">
+      <p className="text-white/50 mb-6">
         Showing {courses.length} of {total} courses
       </p>
       
@@ -64,8 +64,8 @@ async function CourseList({ category, search, page }: {
               href={`/courses?page=${p}${category ? `&category=${category}` : ''}${search ? `&search=${search}` : ''}`}
               className={`px-4 py-2 rounded-lg transition-colors ${
                 p === currentPage
-                  ? 'bg-purple-600 text-white'
-                  : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                  ? 'bg-primary text-black font-semibold'
+                  : 'bg-white/5 text-white/70 hover:bg-white/10 border border-white/10'
               }`}
             >
               {p}
@@ -84,14 +84,14 @@ export default async function CoursesPage({ searchParams }: PageProps) {
   const page = parseInt(params.page || '1', 10);
 
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen bg-black">
       <Navbar />
       
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">Browse Courses</h1>
-          <p className="text-slate-400">
+          <p className="text-white/50">
             Discover courses with authentic reviews from real students
           </p>
         </div>
@@ -101,13 +101,13 @@ export default async function CoursesPage({ searchParams }: PageProps) {
           {/* Search */}
           <form action="/courses" method="GET" className="flex-grow max-w-md">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
               <Input
                 type="text"
                 name="search"
                 placeholder="Search courses..."
                 defaultValue={search}
-                className="pl-10 bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
+                className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-primary"
               />
             </div>
             {category !== 'all' && (
@@ -124,10 +124,10 @@ export default async function CoursesPage({ searchParams }: PageProps) {
               >
                 <Badge
                   variant={category === cat.value ? 'default' : 'outline'}
-                  className={`cursor-pointer ${
+                  className={`cursor-pointer transition-all ${
                     category === cat.value
-                      ? 'bg-purple-600 hover:bg-purple-700'
-                      : 'border-slate-600 text-slate-300 hover:bg-slate-700'
+                      ? 'bg-primary text-black hover:bg-primary/90'
+                      : 'border-white/20 text-white/70 hover:bg-white/10 hover:border-white/30'
                   }`}
                 >
                   {cat.label}
@@ -142,7 +142,7 @@ export default async function CoursesPage({ searchParams }: PageProps) {
           fallback={
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-slate-800 rounded-lg h-72 animate-pulse" />
+                <div key={i} className="bg-white/5 border border-white/10 rounded-lg h-72 animate-pulse" />
               ))}
             </div>
           }

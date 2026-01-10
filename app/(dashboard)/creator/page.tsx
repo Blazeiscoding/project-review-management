@@ -5,21 +5,14 @@ import { getCreatorCourses } from '@/lib/actions/course.actions';
 import { getAccessLinks } from '@/lib/actions/access.actions';
 import { getPendingReviews } from '@/lib/actions/review.actions';
 import { Navbar, Footer } from '@/components/shared';
-import { CourseForm } from '@/components/courses';
+import { CreateCourseDialog } from '@/components/courses';
 import { ReviewCard, ModerateButton } from '@/components/reviews';
 import AccessLinkManager from '@/components/courses/AccessLinkManager';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import { BookOpen, Star, Users, Plus, Eye, CheckCircle } from 'lucide-react';
+import { BookOpen, Star, Users, Eye, CheckCircle } from 'lucide-react';
 
 export default async function CreatorDashboard() {
   const user = await getCurrentUser();
@@ -57,7 +50,7 @@ export default async function CreatorDashboard() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen bg-black">
       <Navbar userRole={user.role} />
       
       <div className="container mx-auto px-4 py-12">
@@ -67,75 +60,62 @@ export default async function CreatorDashboard() {
             <h1 className="text-3xl font-bold text-white mb-2">
               Creator Dashboard
             </h1>
-            <p className="text-slate-400">
+            <p className="text-white/50">
               Manage your courses and collect reviews
             </p>
           </div>
           
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button className="bg-purple-600 hover:bg-purple-700">
-                <Plus className="h-4 w-4 mr-2" />
-                New Course
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="bg-slate-800 border-slate-700 max-w-lg">
-              <DialogHeader>
-                <DialogTitle className="text-white">Create New Course</DialogTitle>
-              </DialogHeader>
-              <CourseForm mode="create" />
-            </DialogContent>
-          </Dialog>
+          <CreateCourseDialog />
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="bg-white/[0.03] border-white/10">
             <CardContent className="flex items-center gap-4 p-6">
-              <div className="p-3 bg-purple-500/20 rounded-lg">
-                <BookOpen className="h-6 w-6 text-purple-400" />
+              <div className="p-3 bg-primary/10 rounded-xl">
+                <BookOpen className="h-6 w-6 text-primary" />
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">{courses.length}</p>
-                <p className="text-slate-400 text-sm">Courses</p>
+                <p className="text-white/50 text-sm">Courses</p>
               </div>
             </CardContent>
           </Card>
           
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="bg-white/[0.03] border-white/10">
             <CardContent className="flex items-center gap-4 p-6">
-              <div className="p-3 bg-green-500/20 rounded-lg">
-                <Star className="h-6 w-6 text-green-400" />
+              <div className="p-3 bg-green-500/10 rounded-xl">
+                <Star className="h-6 w-6 text-green-500" />
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">{totalReviews}</p>
-                <p className="text-slate-400 text-sm">Total Reviews</p>
+                <p className="text-white/50 text-sm">Total Reviews</p>
               </div>
             </CardContent>
           </Card>
           
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="bg-white/[0.03] border-white/10">
             <CardContent className="flex items-center gap-4 p-6">
-              <div className="p-3 bg-yellow-500/20 rounded-lg">
-                <Star className="h-6 w-6 text-yellow-400" />
+              <div className="p-3 bg-yellow-500/10 rounded-xl">
+                <Star className="h-6 w-6 text-yellow-500" />
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">
                   {avgRating > 0 ? avgRating.toFixed(1) : '-'}
                 </p>
-                <p className="text-slate-400 text-sm">Avg Rating</p>
+                <p className="text-white/50 text-sm">Avg Rating</p>
               </div>
             </CardContent>
           </Card>
           
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="bg-white/[0.03] border-white/10">
             <CardContent className="flex items-center gap-4 p-6">
-              <div className="p-3 bg-orange-500/20 rounded-lg">
-                <Users className="h-6 w-6 text-orange-400" />
+              <div className="p-3 bg-primary/10 rounded-xl">
+                <Users className="h-6 w-6 text-primary" />
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">{pendingReviews.length}</p>
-                <p className="text-slate-400 text-sm">Pending Reviews</p>
+                <p className="text-white/50 text-sm">Pending Reviews</p>
               </div>
             </CardContent>
           </Card>
@@ -143,14 +123,14 @@ export default async function CreatorDashboard() {
 
         {/* Tabs */}
         <Tabs defaultValue="courses" className="space-y-6">
-          <TabsList className="bg-slate-800 p-1">
-            <TabsTrigger value="courses" className="data-[state=active]:bg-purple-600">
+          <TabsList className="bg-white/5 border border-white/10 p-1">
+            <TabsTrigger value="courses" className="data-[state=active]:bg-primary data-[state=active]:text-black">
               My Courses
             </TabsTrigger>
-            <TabsTrigger value="pending" className="data-[state=active]:bg-purple-600">
+            <TabsTrigger value="pending" className="data-[state=active]:bg-primary data-[state=active]:text-black">
               Pending Reviews
               {pendingReviews.length > 0 && (
-                <Badge className="ml-2 bg-orange-500">{pendingReviews.length}</Badge>
+                <Badge className="ml-2 bg-primary text-black">{pendingReviews.length}</Badge>
               )}
             </TabsTrigger>
           </TabsList>
@@ -159,13 +139,13 @@ export default async function CreatorDashboard() {
             {courses.length > 0 ? (
               <div className="space-y-8">
                 {courses.map((course) => (
-                  <Card key={course._id} className="bg-slate-800/50 border-slate-700">
+                  <Card key={course._id} className="bg-card border-border">
                     <CardHeader>
                       <div className="flex items-center justify-between">
                         <div>
-                          <CardTitle className="text-white">{course.title}</CardTitle>
-                          <div className="flex items-center gap-4 mt-2 text-sm text-slate-400">
-                            <Badge variant="outline" className="border-slate-600">
+                          <CardTitle className="text-foreground">{course.title}</CardTitle>
+                          <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
+                            <Badge variant="outline" className="border-border">
                               {course.category}
                             </Badge>
                             <span className="flex items-center gap-1">
@@ -176,7 +156,7 @@ export default async function CreatorDashboard() {
                           </div>
                         </div>
                         <Link href={`/courses/${course._id}`}>
-                          <Button variant="ghost" className="text-slate-400">
+                          <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
                             <Eye className="h-4 w-4 mr-2" />
                             View
                           </Button>
@@ -194,11 +174,11 @@ export default async function CreatorDashboard() {
                 ))}
               </div>
             ) : (
-              <Card className="bg-slate-800/50 border-slate-700">
+              <Card className="bg-card border-border">
                 <CardContent className="text-center py-12">
-                  <BookOpen className="h-12 w-12 text-slate-600 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-white mb-2">No courses yet</h3>
-                  <p className="text-slate-400 mb-4">
+                  <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-foreground mb-2">No courses yet</h3>
+                  <p className="text-muted-foreground mb-4">
                     Create your first course to start collecting reviews.
                   </p>
                 </CardContent>
@@ -220,11 +200,11 @@ export default async function CreatorDashboard() {
                 ))}
               </div>
             ) : (
-              <Card className="bg-slate-800/50 border-slate-700">
+              <Card className="bg-card border-border">
                 <CardContent className="text-center py-12">
-                  <CheckCircle className="h-12 w-12 text-slate-600 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-white mb-2">All caught up!</h3>
-                  <p className="text-slate-400">
+                  <CheckCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-foreground mb-2">All caught up!</h3>
+                  <p className="text-muted-foreground">
                     No reviews pending moderation.
                   </p>
                 </CardContent>

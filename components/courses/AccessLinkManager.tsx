@@ -99,44 +99,44 @@ export default function AccessLinkManager({ courseId, courseName, links: initial
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+        <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
           <LinkIcon className="h-5 w-5" />
           Access Links
         </h3>
         
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button size="sm" className="bg-purple-600 hover:bg-purple-700">
+            <Button size="sm" className="bg-primary hover:bg-primary/90">
               <Plus className="h-4 w-4 mr-1" />
               New Link
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-slate-800 border-slate-700">
+          <DialogContent className="bg-card border-border">
             <DialogHeader>
-              <DialogTitle className="text-white">Create Access Link</DialogTitle>
+              <DialogTitle className="text-foreground">Create Access Link</DialogTitle>
             </DialogHeader>
             <div className="space-y-4 pt-4">
-              <p className="text-slate-400 text-sm">
-                Create a link for students to access reviews for <span className="text-white">{courseName}</span>
+              <p className="text-muted-foreground text-sm">
+                Create a link for students to access reviews for <span className="text-foreground">{courseName}</span>
               </p>
               
               <div className="space-y-2">
-                <Label className="text-slate-200">Maximum Uses</Label>
+                <Label className="text-foreground">Maximum Uses</Label>
                 <Input
                   type="number"
                   value={maxUses}
                   onChange={(e) => setMaxUses(e.target.value)}
                   min="1"
                   max="1000"
-                  className="bg-slate-700 border-slate-600 text-white"
+                  className="bg-muted border-border text-foreground"
                 />
-                <p className="text-slate-500 text-xs">How many students can use this link</p>
+                <p className="text-muted-foreground text-xs">How many students can use this link</p>
               </div>
 
               <Button
                 onClick={handleCreateLink}
                 disabled={loading}
-                className="w-full bg-purple-600 hover:bg-purple-700"
+                className="w-full bg-primary hover:bg-primary/90"
               >
                 {loading ? (
                   <>
@@ -155,20 +155,20 @@ export default function AccessLinkManager({ courseId, courseName, links: initial
       {links.length > 0 ? (
         <div className="space-y-3">
           {links.map((link) => (
-            <Card key={link._id} className="bg-slate-700/50 border-slate-600">
+            <Card key={link._id} className="bg-muted/50 border-border">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex-grow mr-4">
                     <div className="flex items-center gap-2 mb-1">
-                      <code className="text-purple-400 text-sm">{link.code}</code>
+                      <code className="text-primary text-sm">{link.code}</code>
                       <Badge className={link.isActive 
-                        ? 'bg-green-500/20 text-green-400 border-green-500/30' 
-                        : 'bg-red-500/20 text-red-400 border-red-500/30'
+                        ? 'bg-green-500/10 text-green-500 border-green-500/20' 
+                        : 'bg-red-500/10 text-red-500 border-red-500/20'
                       }>
                         {link.isActive ? 'Active' : 'Inactive'}
                       </Badge>
                     </div>
-                    <div className="flex items-center gap-4 text-xs text-slate-400">
+                    <div className="flex items-center gap-4 text-xs text-muted-foreground">
                       <span>{link.currentUses}/{link.maxUses} uses</span>
                       <span>Created {formatDistanceToNow(new Date(link.createdAt), { addSuffix: true })}</span>
                     </div>
@@ -179,7 +179,7 @@ export default function AccessLinkManager({ courseId, courseName, links: initial
                       size="sm"
                       variant="ghost"
                       onClick={() => copyLink(link.code)}
-                      className="text-slate-400 hover:text-white"
+                      className="text-muted-foreground hover:text-foreground"
                     >
                       {copied === link.code ? (
                         <Check className="h-4 w-4 text-green-500" />
@@ -204,10 +204,10 @@ export default function AccessLinkManager({ courseId, courseName, links: initial
           ))}
         </div>
       ) : (
-        <Card className="bg-slate-700/50 border-slate-600">
+        <Card className="bg-muted/50 border-border">
           <CardContent className="text-center py-8">
-            <LinkIcon className="h-10 w-10 text-slate-600 mx-auto mb-3" />
-            <p className="text-slate-400 text-sm">No access links yet. Create one to share with students.</p>
+            <LinkIcon className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
+            <p className="text-muted-foreground text-sm">No access links yet. Create one to share with students.</p>
           </CardContent>
         </Card>
       )}

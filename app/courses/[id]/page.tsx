@@ -15,13 +15,13 @@ interface PageProps {
 }
 
 const categoryColors: Record<string, string> = {
-  development: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  design: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
-  marketing: 'bg-green-500/20 text-green-400 border-green-500/30',
-  business: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-  photography: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-  music: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-  other: 'bg-slate-500/20 text-slate-400 border-slate-500/30',
+  development: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+  design: 'bg-pink-500/10 text-pink-400 border-pink-500/20',
+  marketing: 'bg-green-500/10 text-green-400 border-green-500/20',
+  business: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+  photography: 'bg-primary/10 text-primary border-primary/20',
+  music: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+  other: 'bg-white/5 text-white/60 border-white/10',
 };
 
 export default async function CourseDetailPage({ params }: PageProps) {
@@ -42,7 +42,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
     : 'C';
 
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen bg-black">
       <Navbar />
       
       <div className="container mx-auto px-4 py-12">
@@ -57,7 +57,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
               
               <h1 className="text-3xl font-bold text-white mb-4">{course.title}</h1>
               
-              <div className="flex flex-wrap items-center gap-4 text-sm text-slate-400 mb-6">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-white/50 mb-6">
                 <div className="flex items-center gap-1">
                   <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
                   <span className="text-white font-medium">
@@ -72,7 +72,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
               </div>
 
               {/* Thumbnail */}
-              <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-800">
+              <div className="relative aspect-video rounded-xl overflow-hidden bg-white/5 border border-white/10">
                 {course.thumbnail ? (
                   <Image
                     src={course.thumbnail}
@@ -82,7 +82,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-6xl font-bold text-slate-700">
+                    <div className="text-6xl font-bold text-white/20">
                       {course.title.charAt(0).toUpperCase()}
                     </div>
                   </div>
@@ -93,7 +93,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
             {/* Description */}
             <div>
               <h2 className="text-xl font-semibold text-white mb-4">About this Course</h2>
-              <p className="text-slate-300 whitespace-pre-line">{course.description}</p>
+              <p className="text-white/70 whitespace-pre-line">{course.description}</p>
             </div>
 
             {/* Review Form (if has access) */}
@@ -102,7 +102,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
             )}
 
             {hasReviewed && (
-              <Card className="bg-green-500/10 border-green-500/30">
+              <Card className="bg-green-500/10 border-green-500/20">
                 <CardContent className="flex items-center gap-3 py-4">
                   <CheckCircle className="h-5 w-5 text-green-500" />
                   <p className="text-green-400">
@@ -113,10 +113,10 @@ export default async function CourseDetailPage({ params }: PageProps) {
             )}
 
             {!hasAccess && (
-              <Card className="bg-slate-800/50 border-slate-700">
+              <Card className="bg-white/[0.03] border-white/10">
                 <CardContent className="flex items-center gap-3 py-4">
-                  <Lock className="h-5 w-5 text-slate-400" />
-                  <p className="text-slate-400">
+                  <Lock className="h-5 w-5 text-white/50" />
+                  <p className="text-white/50">
                     You need an access link from the course creator to submit a review.
                   </p>
                 </CardContent>
@@ -137,10 +137,10 @@ export default async function CourseDetailPage({ params }: PageProps) {
                   ))}
                 </div>
               ) : (
-                <Card className="bg-slate-800/50 border-slate-700">
+                <Card className="bg-white/[0.03] border-white/10">
                   <CardContent className="text-center py-8">
-                    <Star className="h-10 w-10 text-slate-600 mx-auto mb-3" />
-                    <p className="text-slate-400">No reviews yet. Be the first to review!</p>
+                    <Star className="h-10 w-10 text-white/20 mx-auto mb-3" />
+                    <p className="text-white/50">No reviews yet. Be the first to review!</p>
                   </CardContent>
                 </Card>
               )}
@@ -151,13 +151,13 @@ export default async function CourseDetailPage({ params }: PageProps) {
           <div className="lg:col-span-1">
             <div className="sticky top-20 space-y-6">
               {/* Creator Card */}
-              <Card className="bg-slate-800/50 border-slate-700">
+              <Card className="bg-white/[0.03] border-white/10">
                 <CardContent className="p-6">
-                  <h3 className="text-sm font-medium text-slate-400 mb-4">Course Creator</h3>
+                  <h3 className="text-sm font-medium text-white/50 mb-4">Course Creator</h3>
                   <div className="flex items-center gap-3">
                     <Avatar className="h-12 w-12">
                       <AvatarImage src={course.creator?.profileImage} />
-                      <AvatarFallback className="bg-purple-600 text-white">
+                      <AvatarFallback className="bg-primary text-black font-semibold">
                         {creatorInitials}
                       </AvatarFallback>
                     </Avatar>
@@ -165,7 +165,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
                       <p className="font-medium text-white">
                         {course.creator?.firstName} {course.creator?.lastName}
                       </p>
-                      <p className="text-sm text-slate-400">Course Creator</p>
+                      <p className="text-sm text-white/50">Course Creator</p>
                     </div>
                   </div>
                 </CardContent>
@@ -173,15 +173,15 @@ export default async function CourseDetailPage({ params }: PageProps) {
 
               {/* Rating Summary */}
               {course.totalReviews > 0 && (
-                <Card className="bg-slate-800/50 border-slate-700">
+                <Card className="bg-white/[0.03] border-white/10">
                   <CardContent className="p-6">
-                    <h3 className="text-sm font-medium text-slate-400 mb-4">Rating Summary</h3>
+                    <h3 className="text-sm font-medium text-white/50 mb-4">Rating Summary</h3>
                     <div className="text-center mb-4">
                       <div className="text-4xl font-bold text-white mb-2">
                         {course.averageRating.toFixed(1)}
                       </div>
                       <StarRating rating={Math.round(course.averageRating)} readonly />
-                      <p className="text-slate-400 text-sm mt-2">
+                      <p className="text-white/50 text-sm mt-2">
                         Based on {course.totalReviews} reviews
                       </p>
                     </div>

@@ -89,7 +89,7 @@ export default function ReviewForm({ courseId, courseName }: ReviewFormProps) {
   };
 
   return (
-    <Card className="bg-slate-800/50 border-slate-700">
+    <Card className="bg-white/[0.03] border-white/10">
       <CardHeader>
         <CardTitle className="text-white flex items-center gap-2">
           <Star className="h-5 w-5 text-yellow-500" />
@@ -100,14 +100,14 @@ export default function ReviewForm({ courseId, courseName }: ReviewFormProps) {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Overall Rating */}
           <div className="space-y-3">
-            <Label className="text-slate-200">Overall Rating</Label>
+            <Label className="text-white">Overall Rating</Label>
             <div className="flex items-center gap-3">
               <StarRating 
                 rating={overallRating} 
                 onRatingChange={(val) => setValue('overallRating', val)}
                 size="lg"
               />
-              <span className="text-slate-400 text-sm">
+              <span className="text-white/50 text-sm">
                 {overallRating > 0 ? `${overallRating}/5` : 'Select rating'}
               </span>
             </div>
@@ -117,23 +117,23 @@ export default function ReviewForm({ courseId, courseName }: ReviewFormProps) {
           </div>
 
           {/* Detailed Ratings */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-slate-700/30 rounded-lg">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-white/[0.02] rounded-xl border border-white/5">
             <div className="space-y-2">
-              <Label className="text-slate-300 text-sm">Instructor Quality</Label>
+              <Label className="text-white/70 text-sm">Instructor Quality</Label>
               <StarRating 
                 rating={instructorQuality} 
                 onRatingChange={(val) => setValue('instructorQuality', val)}
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-slate-300 text-sm">Content Quality</Label>
+              <Label className="text-white/70 text-sm">Content Quality</Label>
               <StarRating 
                 rating={contentQuality} 
                 onRatingChange={(val) => setValue('contentQuality', val)}
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-slate-300 text-sm">Value for Money</Label>
+              <Label className="text-white/70 text-sm">Value for Money</Label>
               <StarRating 
                 rating={valueForMoney} 
                 onRatingChange={(val) => setValue('valueForMoney', val)}
@@ -143,12 +143,12 @@ export default function ReviewForm({ courseId, courseName }: ReviewFormProps) {
 
           {/* Title */}
           <div className="space-y-2">
-            <Label htmlFor="title" className="text-slate-200">Review Title</Label>
+            <Label htmlFor="title" className="text-white">Review Title</Label>
             <Input
               id="title"
               {...register('title')}
               placeholder="Summarize your experience..."
-              className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-primary"
             />
             {errors.title && (
               <p className="text-red-400 text-sm">{errors.title.message}</p>
@@ -157,13 +157,13 @@ export default function ReviewForm({ courseId, courseName }: ReviewFormProps) {
 
           {/* Content */}
           <div className="space-y-2">
-            <Label htmlFor="content" className="text-slate-200">Your Review</Label>
+            <Label htmlFor="content" className="text-white">Your Review</Label>
             <Textarea
               id="content"
               {...register('content')}
               placeholder="Share your detailed experience with this course..."
               rows={5}
-              className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-primary"
             />
             {errors.content && (
               <p className="text-red-400 text-sm">{errors.content.message}</p>
@@ -173,7 +173,7 @@ export default function ReviewForm({ courseId, courseName }: ReviewFormProps) {
           <Button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-purple-600 hover:bg-purple-700"
+            className="w-full bg-primary hover:bg-primary/90 text-black font-semibold"
           >
             {loading ? (
               <>

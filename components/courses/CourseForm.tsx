@@ -100,6 +100,7 @@ export default function CourseForm({ mode, course, onSuccess }: CourseFormProps)
       }
 
       toast.success(mode === 'create' ? 'Course created!' : 'Course updated!');
+      setLoading(false);
       
       if (onSuccess) {
         onSuccess();
@@ -116,12 +117,12 @@ export default function CourseForm({ mode, course, onSuccess }: CourseFormProps)
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="space-y-2">
-        <Label htmlFor="title" className="text-slate-200">Course Title</Label>
+        <Label htmlFor="title" className="text-white">Course Title</Label>
         <Input
           id="title"
           {...register('title')}
           placeholder="e.g., Complete Web Development Bootcamp"
-          className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+          className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-primary"
         />
         {errors.title && (
           <p className="text-red-400 text-sm">{errors.title.message}</p>
@@ -129,13 +130,13 @@ export default function CourseForm({ mode, course, onSuccess }: CourseFormProps)
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="description" className="text-slate-200">Description</Label>
+        <Label htmlFor="description" className="text-white">Description</Label>
         <Textarea
           id="description"
           {...register('description')}
           placeholder="Describe what students will learn in this course..."
           rows={4}
-          className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+          className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-primary"
         />
         {errors.description && (
           <p className="text-red-400 text-sm">{errors.description.message}</p>
@@ -143,20 +144,20 @@ export default function CourseForm({ mode, course, onSuccess }: CourseFormProps)
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="category" className="text-slate-200">Category</Label>
+        <Label htmlFor="category" className="text-white">Category</Label>
         <Select
           value={selectedCategory}
           onValueChange={(value: CourseFormData['category']) => setValue('category', value)}
         >
-          <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+          <SelectTrigger className="bg-white/5 border-white/10 text-white">
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>
-          <SelectContent className="bg-slate-700 border-slate-600">
+          <SelectContent className="bg-zinc-900 border-white/10">
             {categories.map(cat => (
               <SelectItem 
                 key={cat.value} 
                 value={cat.value}
-                className="text-white focus:bg-slate-600"
+                className="text-white focus:bg-white/10"
               >
                 {cat.label}
               </SelectItem>
@@ -169,12 +170,12 @@ export default function CourseForm({ mode, course, onSuccess }: CourseFormProps)
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="thumbnail" className="text-slate-200">Thumbnail URL (optional)</Label>
+        <Label htmlFor="thumbnail" className="text-white">Thumbnail URL (optional)</Label>
         <Input
           id="thumbnail"
           {...register('thumbnail')}
           placeholder="https://example.com/image.jpg"
-          className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+          className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-primary"
         />
         {errors.thumbnail && (
           <p className="text-red-400 text-sm">{errors.thumbnail.message}</p>
@@ -184,7 +185,7 @@ export default function CourseForm({ mode, course, onSuccess }: CourseFormProps)
       <Button 
         type="submit" 
         disabled={loading}
-        className="w-full bg-purple-600 hover:bg-purple-700"
+        className="w-full bg-primary hover:bg-primary/90 text-black font-semibold"
       >
         {loading ? (
           <>

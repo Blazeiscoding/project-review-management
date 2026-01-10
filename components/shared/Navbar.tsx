@@ -40,17 +40,17 @@ export default function Navbar({ userRole }: NavbarProps) {
   return (
     <nav className={`sticky top-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? 'bg-slate-900/95 backdrop-blur-sm border-b border-slate-800' 
+        ? 'bg-background/95 backdrop-blur-sm border-b border-border' 
         : 'bg-transparent'
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="p-2 rounded-lg bg-purple-600 group-hover:bg-purple-500 transition-colors">
-              <BookOpen className="h-5 w-5 text-white" />
+            <div className="p-2 rounded-lg bg-primary group-hover:bg-primary/90 transition-colors">
+              <BookOpen className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="font-bold text-xl text-white hidden sm:block">
+            <span className="font-bold text-xl text-foreground hidden sm:block">
               CourseReviews
             </span>
           </Link>
@@ -61,8 +61,8 @@ export default function Navbar({ userRole }: NavbarProps) {
               href="/courses" 
               className={`text-sm font-medium transition-colors ${
                 isActive('/courses') 
-                  ? 'text-white' 
-                  : 'text-slate-400 hover:text-white'
+                  ? 'text-foreground' 
+                  : 'text-muted-foreground hover:text-foreground'
               }`}
             >
               Browse Courses
@@ -75,8 +75,8 @@ export default function Navbar({ userRole }: NavbarProps) {
                   pathname?.startsWith('/student') || 
                   pathname?.startsWith('/creator') || 
                   pathname?.startsWith('/admin')
-                    ? 'text-white' 
-                    : 'text-slate-400 hover:text-white'
+                    ? 'text-foreground' 
+                    : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 Dashboard
@@ -89,12 +89,12 @@ export default function Navbar({ userRole }: NavbarProps) {
             <SignedOut>
               <div className="hidden sm:flex items-center gap-3">
                 <SignInButton mode="modal">
-                  <Button variant="ghost" size="sm" className="text-slate-300 hover:text-white">
+                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
                     Sign In
                   </Button>
                 </SignInButton>
                 <SignUpButton mode="modal">
-                  <Button size="sm" className="bg-purple-600 hover:bg-purple-700">
+                  <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
                     Get Started
                   </Button>
                 </SignUpButton>
@@ -114,7 +114,7 @@ export default function Navbar({ userRole }: NavbarProps) {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2 text-slate-400 hover:text-white"
+              className="md:hidden p-2 text-muted-foreground hover:text-foreground"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -124,12 +124,12 @@ export default function Navbar({ userRole }: NavbarProps) {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-slate-800 py-4">
+          <div className="md:hidden border-t border-border py-4">
             <div className="flex flex-col gap-4">
               <Link 
                 href="/courses"
                 onClick={() => setIsMenuOpen(false)}
-                className="text-slate-300 hover:text-white px-2 py-2"
+                className="text-muted-foreground hover:text-foreground px-2 py-2"
               >
                 Browse Courses
               </Link>
@@ -138,21 +138,21 @@ export default function Navbar({ userRole }: NavbarProps) {
                 <Link 
                   href={getDashboardLink()}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-slate-300 hover:text-white px-2 py-2"
+                  className="text-muted-foreground hover:text-foreground px-2 py-2"
                 >
                   Dashboard
                 </Link>
               </SignedIn>
 
               <SignedOut>
-                <div className="flex flex-col gap-2 pt-2 border-t border-slate-800">
+                <div className="flex flex-col gap-2 pt-2 border-t border-border">
                   <SignInButton mode="modal">
-                    <Button variant="ghost" className="justify-start text-slate-300">
+                    <Button variant="ghost" className="justify-start text-muted-foreground hover:text-foreground">
                       Sign In
                     </Button>
                   </SignInButton>
                   <SignUpButton mode="modal">
-                    <Button className="bg-purple-600 hover:bg-purple-700">
+                    <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
                       Get Started
                     </Button>
                   </SignUpButton>
