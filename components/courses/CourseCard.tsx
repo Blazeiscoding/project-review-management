@@ -31,6 +31,11 @@ const categoryColors: Record<string, string> = {
 };
 
 export default function CourseCard({ course }: CourseCardProps) {
+  // Guard against incomplete course data
+  if (!course || !course.title) {
+    return null;
+  }
+
   return (
     <Link href={`/courses/${course._id}`}>
       <Card className="group bg-white/[0.03] border border-white/10 hover:border-primary/50 hover:bg-white/[0.05] transition-all duration-300 overflow-hidden h-full flex flex-col">
@@ -46,13 +51,13 @@ export default function CourseCard({ course }: CourseCardProps) {
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-4xl font-bold text-muted-foreground/50">
-                {course.title.charAt(0).toUpperCase()}
+                {course.title?.charAt(0)?.toUpperCase() || 'C'}
               </div>
             </div>
           )}
           <div className="absolute top-3 left-3">
-            <Badge className={`${categoryColors[course.category]} border`}>
-              {course.category}
+            <Badge className={`${categoryColors[course.category] || categoryColors.other} border`}>
+              {course.category || 'other'}
             </Badge>
           </div>
         </div>
