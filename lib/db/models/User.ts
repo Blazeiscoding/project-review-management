@@ -12,9 +12,7 @@ export const UserValidation = z.object({
 });
 
 export const OnboardingValidation = z.object({
-  role: z.enum(['student', 'creator'], {
-    required_error: 'Please select a role',
-  }),
+  role: z.enum(['student', 'creator']),
 });
 
 // TypeScript interface

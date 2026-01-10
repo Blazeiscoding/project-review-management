@@ -5,6 +5,20 @@ import { connectDB } from '@/lib/db/mongodb';
 import User from '@/lib/db/models/User';
 import { revalidatePath } from 'next/cache';
 
+// Type for serialized user data
+export interface UserType {
+  _id: string;
+  clerkId: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: 'student' | 'creator' | 'admin';
+  profileImage?: string;
+  onboardingComplete: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export async function completeOnboarding(role: 'student' | 'creator') {
   try {
     const { userId } = await auth();
@@ -52,7 +66,7 @@ export async function completeOnboarding(role: 'student' | 'creator') {
   }
 }
 
-export async function getCurrentUser() {
+export async function getCurrentUser(): Promise<UserType | null> {
   try {
     const { userId } = await auth();
     
@@ -71,7 +85,7 @@ export async function getCurrentUser() {
   }
 }
 
-export async function getUserById(id: string) {
+export async function getUserById(id: string): Promise<UserType | null> {
   try {
     await connectDB();
 
@@ -114,7 +128,7 @@ export async function updateUserRole(
   }
 }
 
-export async function getAllUsers() {
+export async function getAllUsers(): Promise<{ users: UserType[]; error?: string }> {
   try {
     const { userId } = await auth();
     
@@ -141,3 +155,4 @@ export async function getAllUsers() {
     return { users: [] };
   }
 }
+
