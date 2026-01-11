@@ -42,13 +42,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 const categoryColors: Record<string, string> = {
-  development: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  design: 'bg-pink-500/10 text-pink-400 border-pink-500/20',
-  marketing: 'bg-green-500/10 text-green-400 border-green-500/20',
-  business: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+  development: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20',
+  design: 'bg-pink-500/10 text-pink-600 dark:text-pink-400 border-pink-500/20',
+  marketing: 'bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20',
+  business: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
   photography: 'bg-primary/10 text-primary border-primary/20',
-  music: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  other: 'bg-white/5 text-white/60 border-white/10',
+  music: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20',
+  other: 'bg-muted text-muted-foreground border-border',
 };
 
 export default async function CourseDetailPage({ params }: PageProps) {
@@ -82,12 +82,12 @@ export default async function CourseDetailPage({ params }: PageProps) {
                 {course.category}
               </Badge>
               
-              <h1 className="text-3xl font-bold text-white mb-4">{course.title}</h1>
+              <h1 className="text-3xl font-bold text-foreground mb-4">{course.title}</h1>
               
-              <div className="flex flex-wrap items-center gap-4 text-sm text-white/50 mb-6">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6">
                 <div className="flex items-center gap-1">
                   <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-                  <span className="text-white font-medium">
+                  <span className="text-foreground font-medium">
                     {course.averageRating > 0 ? course.averageRating.toFixed(1) : 'New'}
                   </span>
                   <span>({course.totalReviews} reviews)</span>
@@ -99,7 +99,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
               </div>
 
               {/* Thumbnail */}
-              <div className="relative aspect-video rounded-xl overflow-hidden bg-white/5 border border-white/10">
+              <div className="relative aspect-video rounded-xl overflow-hidden bg-muted border border-border">
                 {course.thumbnail ? (
                   <Image
                     src={course.thumbnail}
@@ -109,7 +109,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-6xl font-bold text-white/20">
+                    <div className="text-6xl font-bold text-muted-foreground/20">
                       {course.title.charAt(0).toUpperCase()}
                     </div>
                   </div>
@@ -119,8 +119,8 @@ export default async function CourseDetailPage({ params }: PageProps) {
 
             {/* Description */}
             <div>
-              <h2 className="text-xl font-semibold text-white mb-4">About this Course</h2>
-              <p className="text-white/70 whitespace-pre-line">{course.description}</p>
+              <h2 className="text-xl font-semibold text-foreground mb-4">About this Course</h2>
+              <p className="text-muted-foreground whitespace-pre-line">{course.description}</p>
             </div>
 
             {/* Review Form (if has access) */}
@@ -131,8 +131,8 @@ export default async function CourseDetailPage({ params }: PageProps) {
             {hasReviewed && (
               <Card className="bg-green-500/10 border-green-500/20">
                 <CardContent className="flex items-center gap-3 py-4">
-                  <CheckCircle className="h-5 w-5 text-green-500" />
-                  <p className="text-green-400">
+                  <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-500" />
+                  <p className="text-green-600 dark:text-green-400">
                     Thank you! You have already submitted a review for this course.
                   </p>
                 </CardContent>
@@ -140,10 +140,10 @@ export default async function CourseDetailPage({ params }: PageProps) {
             )}
 
             {!hasAccess && (
-              <Card className="bg-white/[0.03] border-white/10">
+              <Card className="bg-card border-border">
                 <CardContent className="flex items-center gap-3 py-4">
-                  <Lock className="h-5 w-5 text-white/50" />
-                  <p className="text-white/50">
+                  <Lock className="h-5 w-5 text-muted-foreground" />
+                  <p className="text-muted-foreground">
                     You need an access link from the course creator to submit a review.
                   </p>
                 </CardContent>

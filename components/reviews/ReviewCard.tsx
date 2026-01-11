@@ -33,13 +33,13 @@ export default function ReviewCard({ review, showStatus = false }: ReviewCardPro
     : 'U';
 
   const statusColors = {
-    pending: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
-    approved: 'bg-green-500/10 text-green-400 border-green-500/20',
-    rejected: 'bg-red-500/10 text-red-400 border-red-500/20',
+    pending: 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border-yellow-500/20',
+    approved: 'bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20',
+    rejected: 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20',
   };
 
   return (
-    <Card className="bg-white/[0.03] border-white/10">
+    <Card className="bg-card border-border">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">

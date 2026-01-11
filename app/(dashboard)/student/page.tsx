@@ -34,30 +34,30 @@ export default async function StudentDashboard() {
   const pendingReviews = courses.filter(c => !c.hasReviewed);
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
       <Navbar userRole={user.role} />
       
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 className="text-3xl font-bold text-foreground mb-2">
             Welcome back, {user.firstName}!
           </h1>
-          <p className="text-white/50">
+          <p className="text-muted-foreground">
             Manage your course reviews and accessible courses
           </p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <Card className="bg-white/[0.03] border-white/10">
+          <Card className="bg-card border-border">
             <CardContent className="flex items-center gap-4 p-6">
               <div className="p-3 bg-primary/10 rounded-xl">
                 <BookOpen className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">{courses.length}</p>
-                <p className="text-white/50 text-sm">Accessible Courses</p>
+                <p className="text-2xl font-bold text-foreground">{courses.length}</p>
+                <p className="text-muted-foreground text-sm">Accessible Courses</p>
               </div>
             </CardContent>
           </Card>
@@ -89,11 +89,11 @@ export default async function StudentDashboard() {
 
         {/* Tabs */}
         <Tabs defaultValue="courses" className="space-y-6">
-          <TabsList className="bg-white/5 border border-white/10 p-1">
-            <TabsTrigger value="courses" className="data-[state=active]:bg-primary data-[state=active]:text-black">
+          <TabsList className="bg-muted border border-border p-1">
+            <TabsTrigger value="courses" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               My Courses
             </TabsTrigger>
-            <TabsTrigger value="reviews" className="data-[state=active]:bg-primary data-[state=active]:text-black">
+            <TabsTrigger value="reviews" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               My Reviews
             </TabsTrigger>
           </TabsList>

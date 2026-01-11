@@ -39,16 +39,16 @@ async function RoleSelector({ userId, currentRole }: { userId: string; currentRo
   return (
     <form action={handleRoleChange} className="flex items-center gap-2">
       <Select name="role" defaultValue={currentRole}>
-        <SelectTrigger className="w-28 bg-white/5 border-white/10 text-white text-sm">
+        <SelectTrigger className="w-28 bg-muted border-border text-foreground text-sm">
           <SelectValue />
         </SelectTrigger>
-        <SelectContent className="bg-zinc-900 border-white/10">
-          <SelectItem value="student" className="text-white">Student</SelectItem>
-          <SelectItem value="creator" className="text-white">Creator</SelectItem>
-          <SelectItem value="admin" className="text-white">Admin</SelectItem>
+        <SelectContent className="bg-popover border-border">
+          <SelectItem value="student" className="text-foreground">Student</SelectItem>
+          <SelectItem value="creator" className="text-foreground">Creator</SelectItem>
+          <SelectItem value="admin" className="text-foreground">Admin</SelectItem>
         </SelectContent>
       </Select>
-      <Button type="submit" size="sm" className="bg-primary hover:bg-primary/90 text-black font-medium">
+      <Button type="submit" size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium">
         Update
       </Button>
     </form>
@@ -76,26 +76,26 @@ export default async function AdminDashboard() {
   const creatorCount = users.filter(u => u.role === 'creator').length;
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
       <Navbar userRole={user.role} />
       
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
+          <h1 className="text-3xl font-bold text-foreground mb-2 flex items-center gap-3">
             <div className="p-2 bg-primary/10 rounded-xl">
               <Shield className="h-6 w-6 text-primary" />
             </div>
             Admin Dashboard
           </h1>
-          <p className="text-white/50">
+          <p className="text-muted-foreground">
             Manage users, courses, and review moderation
           </p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Card className="bg-white/[0.03] border-white/10">
+          <Card className="bg-card border-border">
             <CardContent className="flex items-center gap-4 p-6">
               <div className="p-3 bg-primary/10 rounded-xl">
                 <Users className="h-6 w-6 text-primary" />
