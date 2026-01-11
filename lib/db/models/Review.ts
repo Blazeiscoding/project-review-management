@@ -84,7 +84,11 @@ const ReviewSchema = new Schema<IReview>(
 
 // Prevent duplicate reviews
 ReviewSchema.index({ course: 1, student: 1 }, { unique: true });
+// Compound index for status queries (used in getPendingReviews, getCourseReviews)
+ReviewSchema.index({ course: 1, status: 1 });
+ReviewSchema.index({ status: 1, createdAt: -1 });
 
 const Review: Model<IReview> = mongoose.models.Review || mongoose.model<IReview>('Review', ReviewSchema);
 
 export default Review;
+

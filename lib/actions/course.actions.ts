@@ -2,7 +2,7 @@
 
 import { auth } from '@clerk/nextjs/server';
 import { connectDB } from '@/lib/db/mongodb';
-import Course, { CourseValidation } from '@/lib/db/models/Course';
+import Course, { CourseValidation, CourseUpdateValidation } from '@/lib/db/models/Course';
 import User from '@/lib/db/models/User';
 import { revalidatePath } from 'next/cache';
 
@@ -76,19 +76,26 @@ export async function updateCourse(courseId: string, formData: FormData) {
       return { error: 'Unauthorized - Not the course owner' };
     }
 
-    const updateData: Record<string, string | undefined> = {};
-    
+    // Build update data from form
+    const rawData: Record<string, string | undefined> = {};
     const title = formData.get('title') as string;
     const description = formData.get('description') as string;
     const category = formData.get('category') as string;
     const thumbnail = formData.get('thumbnail') as string;
     
-    if (title) updateData.title = title;
-    if (description) updateData.description = description;
-    if (category) updateData.category = category;
-    if (thumbnail) updateData.thumbnail = thumbnail;
+    if (title) rawData.title = title;
+    if (description) rawData.description = description;
+    if (category) rawData.category = category;
+    if (thumbnail) rawData.thumbnail = thumbnail;
 
-    await Course.findByIdAndUpdate(courseId, updateData);
+    // Validate update data
+    const validatedFields = CourseUpdateValidation.safeParse(rawData);
+
+    if (!validatedFields.success) {
+      return { error: validatedFields.error.flatten().fieldErrors };
+    }
+
+    await Course.findByIdAndUpdate(courseId, validatedFields.data);
 
     revalidatePath('/creator');
     revalidatePath(`/courses/${courseId}`);
