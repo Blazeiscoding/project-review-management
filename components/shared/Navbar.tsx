@@ -10,6 +10,7 @@ import {
   SignUpButton
 } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
+import ThemeToggle from './ThemeToggle';
 import { BookOpen, Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
@@ -85,7 +86,9 @@ export default function Navbar({ userRole }: NavbarProps) {
           </div>
 
           {/* Right Side */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            
             <SignedOut>
               <div className="hidden sm:flex items-center gap-3">
                 <SignInButton mode="modal">
