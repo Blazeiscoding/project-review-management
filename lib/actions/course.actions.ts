@@ -162,6 +162,7 @@ export async function getAllCourses(filters?: {
   search?: string;
   page?: number;
   limit?: number;
+  sort?: 'newest' | 'rating' | 'reviews';
 }) {
   try {
     await connectDB();
@@ -181,10 +182,26 @@ export async function getAllCourses(filters?: {
       query.$text = { $search: filters.search };
     }
 
+    // Build sort options
+    type SortOrder = 1 | -1;
+    let sortOption: Record<string, SortOrder> = { createdAt: -1 };
+    
+    switch (filters?.sort) {
+      case 'rating':
+        sortOption = { averageRating: -1, totalReviews: -1 };
+        break;
+      case 'reviews':
+        sortOption = { totalReviews: -1, averageRating: -1 };
+        break;
+      case 'newest':
+      default:
+        sortOption = { createdAt: -1 };
+    }
+
     const [courses, total] = await Promise.all([
       Course.find(query)
         .populate('creator', 'firstName lastName')
-        .sort({ createdAt: -1 })
+        .sort(sortOption)
         .skip(skip)
         .limit(limit)
         .lean(),

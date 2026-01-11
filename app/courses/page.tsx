@@ -4,7 +4,14 @@ import { Navbar, Footer } from '@/components/shared';
 import { CourseCard } from '@/components/courses';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Search, BookOpen } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Search, BookOpen, ArrowUpDown } from 'lucide-react';
 
 const categories = [
   { value: 'all', label: 'All' },
@@ -17,35 +24,43 @@ const categories = [
   { value: 'other', label: 'Other' },
 ];
 
+const sortOptions = [
+  { value: 'newest', label: 'Newest' },
+  { value: 'rating', label: 'Highest Rated' },
+  { value: 'reviews', label: 'Most Reviewed' },
+];
+
 interface PageProps {
-  searchParams: Promise<{ category?: string; search?: string; page?: string }>;
+  searchParams: Promise<{ category?: string; search?: string; page?: string; sort?: string }>;
 }
 
-async function CourseList({ category, search, page }: { 
+async function CourseList({ category, search, page, sort }: { 
   category?: string; 
   search?: string; 
   page: number;
+  sort?: 'newest' | 'rating' | 'reviews';
 }) {
   const { courses, total, pages, currentPage } = await getAllCourses({
     category: category && category !== 'all' ? category : undefined,
     search,
     page,
     limit: 12,
+    sort: sort || 'newest',
   });
 
   if (courses.length === 0) {
     return (
       <div className="text-center py-20">
-        <BookOpen className="h-12 w-12 text-white/30 mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-white mb-2">No courses found</h3>
-        <p className="text-white/50">Try adjusting your filters or search terms</p>
+        <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+        <h3 className="text-xl font-semibold text-foreground mb-2">No courses found</h3>
+        <p className="text-muted-foreground">Try adjusting your filters or search terms</p>
       </div>
     );
   }
 
   return (
     <div>
-      <p className="text-white/50 mb-6">
+      <p className="text-muted-foreground mb-6">
         Showing {courses.length} of {total} courses
       </p>
       
@@ -61,11 +76,11 @@ async function CourseList({ category, search, page }: {
           {Array.from({ length: pages }, (_, i) => i + 1).map((p) => (
             <a
               key={p}
-              href={`/courses?page=${p}${category ? `&category=${category}` : ''}${search ? `&search=${search}` : ''}`}
+              href={`/courses?page=${p}${category ? `&category=${category}` : ''}${search ? `&search=${search}` : ''}${sort ? `&sort=${sort}` : ''}`}
               className={`px-4 py-2 rounded-lg transition-colors ${
                 p === currentPage
-                  ? 'bg-primary text-black font-semibold'
-                  : 'bg-white/5 text-white/70 hover:bg-white/10 border border-white/10'
+                  ? 'bg-primary text-primary-foreground font-semibold'
+                  : 'bg-muted text-muted-foreground hover:bg-accent border border-border'
               }`}
             >
               {p}
@@ -82,6 +97,7 @@ export default async function CoursesPage({ searchParams }: PageProps) {
   const category = params.category || 'all';
   const search = params.search;
   const page = parseInt(params.page || '1', 10);
+  const sort = (params.sort as 'newest' | 'rating' | 'reviews') || 'newest';
 
   return (
     <div className="min-h-screen bg-black">
@@ -101,40 +117,67 @@ export default async function CoursesPage({ searchParams }: PageProps) {
           {/* Search */}
           <form action="/courses" method="GET" className="flex-grow max-w-md">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="text"
                 name="search"
                 placeholder="Search courses..."
                 defaultValue={search}
-                className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-primary"
+                className="pl-10 bg-muted border-border text-foreground placeholder:text-muted-foreground focus:border-primary"
               />
             </div>
             {category !== 'all' && (
               <input type="hidden" name="category" value={category} />
             )}
+            {sort !== 'newest' && (
+              <input type="hidden" name="sort" value={sort} />
+            )}
           </form>
 
-          {/* Category Filter */}
-          <div className="flex flex-wrap gap-2">
-            {categories.map((cat) => (
-              <a
-                key={cat.value}
-                href={`/courses?category=${cat.value}${search ? `&search=${search}` : ''}`}
-              >
-                <Badge
-                  variant={category === cat.value ? 'default' : 'outline'}
-                  className={`cursor-pointer transition-all ${
-                    category === cat.value
-                      ? 'bg-primary text-black hover:bg-primary/90'
-                      : 'border-white/20 text-white/70 hover:bg-white/10 hover:border-white/30'
-                  }`}
+          {/* Sort Dropdown */}
+          <div className="flex items-center gap-2">
+            <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
+            <div className="flex gap-1">
+              {sortOptions.map((option) => (
+                <a
+                  key={option.value}
+                  href={`/courses?sort=${option.value}${category !== 'all' ? `&category=${category}` : ''}${search ? `&search=${search}` : ''}`}
                 >
-                  {cat.label}
-                </Badge>
-              </a>
-            ))}
+                  <Badge
+                    variant={sort === option.value ? 'default' : 'outline'}
+                    className={`cursor-pointer transition-all ${
+                      sort === option.value
+                        ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                        : 'border-border text-muted-foreground hover:bg-accent hover:border-border'
+                    }`}
+                  >
+                    {option.label}
+                  </Badge>
+                </a>
+              ))}
+            </div>
           </div>
+        </div>
+
+        {/* Category Filter */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          {categories.map((cat) => (
+            <a
+              key={cat.value}
+              href={`/courses?category=${cat.value}${search ? `&search=${search}` : ''}${sort !== 'newest' ? `&sort=${sort}` : ''}`}
+            >
+              <Badge
+                variant={category === cat.value ? 'default' : 'outline'}
+                className={`cursor-pointer transition-all ${
+                  category === cat.value
+                    ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                    : 'border-border text-muted-foreground hover:bg-accent hover:border-border'
+                }`}
+              >
+                {cat.label}
+              </Badge>
+            </a>
+          ))}
         </div>
 
         {/* Course List */}
@@ -142,12 +185,12 @@ export default async function CoursesPage({ searchParams }: PageProps) {
           fallback={
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-white/5 border border-white/10 rounded-lg h-72 animate-pulse" />
+                <div key={i} className="bg-muted border border-border rounded-lg h-72 animate-pulse" />
               ))}
             </div>
           }
         >
-          <CourseList category={category} search={search} page={page} />
+          <CourseList category={category} search={search} page={page} sort={sort} />
         </Suspense>
       </div>
 
