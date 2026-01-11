@@ -32,8 +32,11 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className="dark">
-        <body className={`${manrope.variable} ${geistMono.variable} font-sans antialiased`}>
+      <html lang="en" className="dark" suppressHydrationWarning>
+        <body 
+          className={`${manrope.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}
+          suppressHydrationWarning
+        >
           {children}
           <Toaster position="top-right" />
         </body>
