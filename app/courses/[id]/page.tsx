@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import { getCourse } from '@/lib/actions/course.actions';
 import { getCourseReviews, checkReviewAccess } from '@/lib/actions/review.actions';
-import { Navbar, Footer } from '@/components/shared';
+import { Navbar, Footer, ShareButtons } from '@/components/shared';
 import { ReviewCard, ReviewForm, StarRating } from '@/components/reviews';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -12,6 +13,32 @@ import { formatDistanceToNow } from 'date-fns';
 
 interface PageProps {
   params: Promise<{ id: string }>;
+}
+
+// Dynamic SEO metadata
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const course = await getCourse(id);
+  
+  if (!course) {
+    return { title: 'Course Not Found' };
+  }
+
+  return {
+    title: `${course.title} | CourseReviews`,
+    description: course.description.slice(0, 160),
+    openGraph: {
+      title: course.title,
+      description: course.description.slice(0, 160),
+      type: 'article',
+      images: course.thumbnail ? [course.thumbnail] : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: course.title,
+      description: course.description.slice(0, 160),
+    },
+  };
 }
 
 const categoryColors: Record<string, string> = {
@@ -188,6 +215,14 @@ export default async function CourseDetailPage({ params }: PageProps) {
                   </CardContent>
                 </Card>
               )}
+
+              {/* Share */}
+              <Card className="bg-white/[0.03] border-white/10">
+                <CardContent className="p-6">
+                  <h3 className="text-sm font-medium text-white/50 mb-4">Share this course</h3>
+                  <ShareButtons title={course.title} />
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
