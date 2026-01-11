@@ -39,7 +39,7 @@ export default async function StudentDashboard() {
       
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-8 animate-fade-in">
           <h1 className="text-3xl font-bold text-foreground mb-2">
             Welcome back, {user.firstName}!
           </h1>
@@ -49,7 +49,7 @@ export default async function StudentDashboard() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 animate-slide-up">
           <Card className="bg-card border-border">
             <CardContent className="flex items-center gap-4 p-6">
               <div className="p-3 bg-primary/10 rounded-xl">

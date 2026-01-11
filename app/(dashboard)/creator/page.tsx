@@ -55,7 +55,7 @@ export default async function CreatorDashboard() {
       
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-8 animate-fade-in">
           <div>
             <h1 className="text-3xl font-bold text-foreground mb-2">
               Creator Dashboard
@@ -69,7 +69,7 @@ export default async function CreatorDashboard() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 animate-slide-up">
           <Card className="bg-card border-border">
             <CardContent className="flex items-center gap-4 p-6">
               <div className="p-3 bg-primary/10 rounded-xl">
