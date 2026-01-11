@@ -55,32 +55,38 @@ export default function RedeemPage({ params }: PageProps) {
   }, [code, isSignedIn, isLoaded]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md bg-slate-800/50 backdrop-blur-sm border-slate-700">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Subtle grid pattern background */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
+      
+      {/* Orange glow effect */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[400px] h-[300px] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
+      
+      <Card className="relative w-full max-w-md bg-card/50 backdrop-blur-sm border-border">
         <CardContent className="p-8 text-center">
           {status === 'loading' && (
             <>
-              <Loader2 className="h-12 w-12 text-purple-500 mx-auto mb-4 animate-spin" />
-              <h2 className="text-xl font-semibold text-white mb-2">Redeeming Access Link</h2>
-              <p className="text-slate-400">Please wait...</p>
+              <Loader2 className="h-12 w-12 text-primary mx-auto mb-4 animate-spin" />
+              <h2 className="text-xl font-semibold text-foreground mb-2">Redeeming Access Link</h2>
+              <p className="text-muted-foreground">Please wait...</p>
             </>
           )}
 
           {status === 'signin' && (
             <>
-              <LogIn className="h-12 w-12 text-purple-500 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold text-white mb-2">Sign In Required</h2>
-              <p className="text-slate-400 mb-6">
+              <LogIn className="h-12 w-12 text-primary mx-auto mb-4" />
+              <h2 className="text-xl font-semibold text-foreground mb-2">Sign In Required</h2>
+              <p className="text-muted-foreground mb-6">
                 Please sign in to redeem this access link and review the course.
               </p>
               <div className="flex flex-col gap-3">
                 <Link href={`/sign-in?redirect_url=/redeem/${code}`}>
-                  <Button className="w-full bg-purple-600 hover:bg-purple-700">
+                  <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
                     Sign In
                   </Button>
                 </Link>
                 <Link href={`/sign-up?redirect_url=/redeem/${code}`}>
-                  <Button variant="outline" className="w-full border-slate-600 text-slate-300">
+                  <Button variant="outline" className="w-full border-border text-foreground hover:bg-accent">
                     Create Account
                   </Button>
                 </Link>
@@ -91,13 +97,13 @@ export default function RedeemPage({ params }: PageProps) {
           {status === 'success' && (
             <>
               <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold text-white mb-2">Access Granted!</h2>
-              <p className="text-slate-400 mb-6">{message}</p>
+              <h2 className="text-xl font-semibold text-foreground mb-2">Access Granted!</h2>
+              <p className="text-muted-foreground mb-6">{message}</p>
               <div className="flex flex-col gap-3">
                 {courseId && (
                   <Button 
                     onClick={() => router.push(`/courses/${courseId}`)}
-                    className="bg-purple-600 hover:bg-purple-700"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
                   >
                     Go to Course
                   </Button>
@@ -105,7 +111,7 @@ export default function RedeemPage({ params }: PageProps) {
                 <Button 
                   variant="outline" 
                   onClick={() => router.push('/student')}
-                  className="border-slate-600 text-slate-300"
+                  className="border-border text-foreground hover:bg-accent"
                 >
                   Go to Dashboard
                 </Button>
@@ -115,20 +121,20 @@ export default function RedeemPage({ params }: PageProps) {
 
           {status === 'error' && (
             <>
-              <XCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold text-white mb-2">Redemption Failed</h2>
-              <p className="text-slate-400 mb-6">{message}</p>
+              <XCircle className="h-12 w-12 text-destructive mx-auto mb-4" />
+              <h2 className="text-xl font-semibold text-foreground mb-2">Redemption Failed</h2>
+              <p className="text-muted-foreground mb-6">{message}</p>
               <div className="flex flex-col gap-3">
                 <Button 
                   onClick={() => router.push('/courses')}
-                  className="bg-purple-600 hover:bg-purple-700"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground"
                 >
                   Browse Courses
                 </Button>
                 <Button 
                   variant="outline" 
                   onClick={() => router.push('/')}
-                  className="border-slate-600 text-slate-300"
+                  className="border-border text-foreground hover:bg-accent"
                 >
                   Go Home
                 </Button>
@@ -140,3 +146,4 @@ export default function RedeemPage({ params }: PageProps) {
     </div>
   );
 }
+
