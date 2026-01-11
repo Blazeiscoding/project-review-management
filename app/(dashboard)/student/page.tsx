@@ -62,26 +62,26 @@ export default async function StudentDashboard() {
             </CardContent>
           </Card>
           
-          <Card className="bg-white/[0.03] border-white/10">
+          <Card className="bg-card border-border">
             <CardContent className="flex items-center gap-4 p-6">
               <div className="p-3 bg-green-500/10 rounded-xl">
-                <Star className="h-6 w-6 text-green-500" />
+                <Star className="h-6 w-6 text-green-600 dark:text-green-500" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">{reviews.length}</p>
-                <p className="text-white/50 text-sm">Reviews Written</p>
+                <p className="text-2xl font-bold text-foreground">{reviews.length}</p>
+                <p className="text-muted-foreground text-sm">Reviews Written</p>
               </div>
             </CardContent>
           </Card>
           
-          <Card className="bg-white/[0.03] border-white/10">
+          <Card className="bg-card border-border">
             <CardContent className="flex items-center gap-4 p-6">
               <div className="p-3 bg-yellow-500/10 rounded-xl">
-                <LinkIcon className="h-6 w-6 text-yellow-500" />
+                <LinkIcon className="h-6 w-6 text-yellow-600 dark:text-yellow-500" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">{pendingReviews.length}</p>
-                <p className="text-white/50 text-sm">Pending Reviews</p>
+                <p className="text-2xl font-bold text-foreground">{pendingReviews.length}</p>
+                <p className="text-muted-foreground text-sm">Pending Reviews</p>
               </div>
             </CardContent>
           </Card>
@@ -148,10 +148,10 @@ export default async function StudentDashboard() {
                         <Badge 
                           className={
                             review.status === 'approved' 
-                              ? 'bg-green-500/10 text-green-500 border-green-500/20'
+                              ? 'bg-green-500/10 text-green-600 dark:text-green-500 border-green-500/20'
                               : review.status === 'rejected'
-                              ? 'bg-red-500/10 text-red-500 border-red-500/20'
-                              : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'
+                              ? 'bg-red-500/10 text-red-600 dark:text-red-500 border-red-500/20'
+                              : 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-500 border-yellow-500/20'
                           }
                         >
                           {review.status}

@@ -107,38 +107,38 @@ export default async function AdminDashboard() {
             </CardContent>
           </Card>
           
-          <Card className="bg-white/[0.03] border-white/10">
+          <Card className="bg-card border-border">
             <CardContent className="flex items-center gap-4 p-6">
               <div className="p-3 bg-green-500/10 rounded-xl">
-                <BookOpen className="h-6 w-6 text-green-500" />
+                <BookOpen className="h-6 w-6 text-green-600 dark:text-green-500" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">{totalCourses}</p>
-                <p className="text-white/50 text-sm">Total Courses</p>
+                <p className="text-2xl font-bold text-foreground">{totalCourses}</p>
+                <p className="text-muted-foreground text-sm">Total Courses</p>
               </div>
             </CardContent>
           </Card>
           
-          <Card className="bg-white/[0.03] border-white/10">
+          <Card className="bg-card border-border">
             <CardContent className="flex items-center gap-4 p-6">
               <div className="p-3 bg-yellow-500/10 rounded-xl">
-                <Star className="h-6 w-6 text-yellow-500" />
+                <Star className="h-6 w-6 text-yellow-600 dark:text-yellow-500" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">{pendingReviews.length}</p>
-                <p className="text-white/50 text-sm">Pending Reviews</p>
+                <p className="text-2xl font-bold text-foreground">{pendingReviews.length}</p>
+                <p className="text-muted-foreground text-sm">Pending Reviews</p>
               </div>
             </CardContent>
           </Card>
           
-          <Card className="bg-white/[0.03] border-white/10">
+          <Card className="bg-card border-border">
             <CardContent className="flex items-center gap-4 p-6">
               <div className="p-3 bg-blue-500/10 rounded-xl">
-                <Users className="h-6 w-6 text-blue-500" />
+                <Users className="h-6 w-6 text-blue-600 dark:text-blue-500" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">{studentCount}/{creatorCount}</p>
-                <p className="text-white/50 text-sm">Students/Creators</p>
+                <p className="text-2xl font-bold text-foreground">{studentCount}/{creatorCount}</p>
+                <p className="text-muted-foreground text-sm">Students/Creators</p>
               </div>
             </CardContent>
           </Card>
@@ -146,42 +146,42 @@ export default async function AdminDashboard() {
 
         {/* Tabs */}
         <Tabs defaultValue="users" className="space-y-6">
-          <TabsList className="bg-white/5 border border-white/10 p-1">
-            <TabsTrigger value="users" className="data-[state=active]:bg-primary data-[state=active]:text-black">
+          <TabsList className="bg-muted border border-border p-1">
+            <TabsTrigger value="users" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               Users
             </TabsTrigger>
-            <TabsTrigger value="courses" className="data-[state=active]:bg-primary data-[state=active]:text-black">
+            <TabsTrigger value="courses" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               Courses
-              <Badge className="ml-2 bg-green-500/20 text-green-400">{totalCourses}</Badge>
+              <Badge className="ml-2 bg-green-500/20 text-green-600 dark:text-green-400">{totalCourses}</Badge>
             </TabsTrigger>
-            <TabsTrigger value="reviews" className="data-[state=active]:bg-primary data-[state=active]:text-black">
+            <TabsTrigger value="reviews" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               Pending Reviews
               {pendingReviews.length > 0 && (
-                <Badge className="ml-2 bg-primary text-black">{pendingReviews.length}</Badge>
+                <Badge className="ml-2 bg-primary text-primary-foreground">{pendingReviews.length}</Badge>
               )}
             </TabsTrigger>
           </TabsList>
 
           {/* Users Tab */}
           <TabsContent value="users">
-            <Card className="bg-white/[0.03] border-white/10">
+            <Card className="bg-card border-border">
               <CardHeader>
-                <CardTitle className="text-white">User Management</CardTitle>
+                <CardTitle className="text-foreground">User Management</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
                   <TableHeader>
-                    <TableRow className="border-white/10 hover:bg-transparent">
-                      <TableHead className="text-white/50">User</TableHead>
-                      <TableHead className="text-white/50">Email</TableHead>
-                      <TableHead className="text-white/50">Role</TableHead>
-                      <TableHead className="text-white/50">Joined</TableHead>
-                      <TableHead className="text-white/50">Actions</TableHead>
+                    <TableRow className="border-border hover:bg-transparent">
+                      <TableHead className="text-muted-foreground">User</TableHead>
+                      <TableHead className="text-muted-foreground">Email</TableHead>
+                      <TableHead className="text-muted-foreground">Role</TableHead>
+                      <TableHead className="text-muted-foreground">Joined</TableHead>
+                      <TableHead className="text-muted-foreground">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {users.map((u) => (
-                      <TableRow key={u._id} className="border-white/10 hover:bg-white/[0.02]">
+                      <TableRow key={u._id} className="border-border hover:bg-muted/50">
                         <TableCell>
                           <div className="flex items-center gap-3">
                             <Avatar className="h-8 w-8">
@@ -190,24 +190,24 @@ export default async function AdminDashboard() {
                                 {u.firstName[0]}{u.lastName[0]}
                               </AvatarFallback>
                             </Avatar>
-                            <span className="text-white">{u.firstName} {u.lastName}</span>
+                            <span className="text-foreground">{u.firstName} {u.lastName}</span>
                           </div>
                         </TableCell>
-                        <TableCell className="text-white/50">{u.email}</TableCell>
+                        <TableCell className="text-muted-foreground">{u.email}</TableCell>
                         <TableCell>
                           <Badge 
                             className={
                               u.role === 'admin' 
                                 ? 'bg-primary/10 text-primary border border-primary/20' 
                                 : u.role === 'creator'
-                                ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-                                : 'bg-green-500/10 text-green-400 border border-green-500/20'
+                                ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20'
+                                : 'bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20'
                             }
                           >
                             {u.role}
                           </Badge>
                         </TableCell>
-                        <TableCell className="text-white/50">
+                        <TableCell className="text-muted-foreground">
                           {formatDistanceToNow(new Date(u.createdAt), { addSuffix: true })}
                         </TableCell>
                         <TableCell>
@@ -223,28 +223,28 @@ export default async function AdminDashboard() {
 
           {/* Courses Tab */}
           <TabsContent value="courses">
-            <Card className="bg-white/[0.03] border-white/10">
+            <Card className="bg-card border-border">
               <CardHeader>
-                <CardTitle className="text-white">Course Management</CardTitle>
+                <CardTitle className="text-foreground">Course Management</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
                   <TableHeader>
-                    <TableRow className="border-white/10 hover:bg-transparent">
-                      <TableHead className="text-white/50">Course</TableHead>
-                      <TableHead className="text-white/50">Category</TableHead>
-                      <TableHead className="text-white/50">Creator</TableHead>
-                      <TableHead className="text-white/50">Rating</TableHead>
-                      <TableHead className="text-white/50">Reviews</TableHead>
-                      <TableHead className="text-white/50">Actions</TableHead>
+                    <TableRow className="border-border hover:bg-transparent">
+                      <TableHead className="text-muted-foreground">Course</TableHead>
+                      <TableHead className="text-muted-foreground">Category</TableHead>
+                      <TableHead className="text-muted-foreground">Creator</TableHead>
+                      <TableHead className="text-muted-foreground">Rating</TableHead>
+                      <TableHead className="text-muted-foreground">Reviews</TableHead>
+                      <TableHead className="text-muted-foreground">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {courses.map((course) => (
-                      <TableRow key={course._id} className="border-white/10 hover:bg-white/[0.02]">
+                      <TableRow key={course._id} className="border-border hover:bg-muted/50">
                         <TableCell>
                           <div className="max-w-xs">
-                            <p className="text-white font-medium truncate">{course.title}</p>
+                            <p className="text-foreground font-medium truncate">{course.title}</p>
                           </div>
                         </TableCell>
                         <TableCell>
