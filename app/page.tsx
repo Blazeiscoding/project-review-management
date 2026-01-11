@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { SignedOut } from '@clerk/nextjs';
 import { Navbar, Footer } from '@/components/shared';
 import { Star, Users, BookOpen, ArrowRight, Shield, Zap, Play } from 'lucide-react';
 
@@ -194,28 +195,30 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative container mx-auto px-4 py-24">
-        {/* Glow effect */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-[500px] h-[300px] bg-primary/10 blur-[120px] rounded-full" />
-        </div>
-        
-        <div className="relative max-w-3xl mx-auto text-center p-12 md:p-16 rounded-3xl bg-card border border-border backdrop-blur-sm">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 tracking-tight">
-            Ready to Get Started?
-          </h2>
-          <p className="text-muted-foreground mb-10 max-w-lg mx-auto">
-            Join thousands of students and creators building trust through authentic reviews.
-          </p>
-          <Link href="/sign-up">
-            <button className="group bg-primary text-primary-foreground font-semibold text-lg px-10 py-4 rounded-tr-2xl rounded-bl-2xl rounded-tl-md rounded-br-md hover:bg-primary/90 transition-all duration-300 flex items-center gap-2 mx-auto">
-              Create Your Account
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </Link>
-        </div>
-      </section>
+      {/* CTA Section - Only show for non-logged in users */}
+      <SignedOut>
+        <section className="relative container mx-auto px-4 py-24">
+          {/* Glow effect */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="w-[500px] h-[300px] bg-primary/10 blur-[120px] rounded-full" />
+          </div>
+          
+          <div className="relative max-w-3xl mx-auto text-center p-12 md:p-16 rounded-3xl bg-card border border-border backdrop-blur-sm">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 tracking-tight">
+              Ready to Get Started?
+            </h2>
+            <p className="text-muted-foreground mb-10 max-w-lg mx-auto">
+              Join thousands of students and creators building trust through authentic reviews.
+            </p>
+            <Link href="/sign-up">
+              <button className="group bg-primary text-primary-foreground font-semibold text-lg px-10 py-4 rounded-tr-2xl rounded-bl-2xl rounded-tl-md rounded-br-md hover:bg-primary/90 transition-all duration-300 flex items-center gap-2 mx-auto">
+                Create Your Account
+                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
+          </div>
+        </section>
+      </SignedOut>
 
       <Footer />
     </div>
