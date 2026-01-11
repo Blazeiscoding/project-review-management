@@ -15,7 +15,7 @@ export default function HomePage() {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative container mx-auto px-4 py-24 md:py-36">
+      <section className="relative container mx-auto px-4 py-24 md:py-36 animate-fade-in">
         <div className="max-w-4xl mx-auto text-center">
           {/* Trust Badge */}
           <div className="inline-flex items-center gap-2 bg-muted/50 border border-border rounded-full px-5 py-2 mb-8 backdrop-blur-sm">
@@ -60,7 +60,7 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="relative container mx-auto px-4 py-12">
+      <section className="relative container mx-auto px-4 py-12 animate-slide-up">
         <div className="max-w-4xl mx-auto grid grid-cols-3 gap-8 border-y border-border py-12">
           <div className="text-center">
             <p className="text-4xl md:text-5xl font-bold text-foreground mb-2">10K+</p>
@@ -78,7 +78,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="relative container mx-auto px-4 py-24">
+      <section className="relative container mx-auto px-4 py-24 animate-slide-up" style={{ animationDelay: '0.1s' }}>
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 tracking-tight">
             Why Choose CourseReviews?
