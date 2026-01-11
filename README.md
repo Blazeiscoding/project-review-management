@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CourseReviews 📚
 
-## Getting Started
+A modern course review management platform built with Next.js 16, enabling students to share authentic reviews and course creators to manage feedback.
 
-First, run the development server:
+## ✨ Features
+
+- **Verified Student Reviews** - Only students with access links can review courses
+- **Multi-dimensional Ratings** - Rate instructor quality, content quality, and value for money
+- **Creator Dashboard** - Course creators can manage courses and generate access links
+- **Admin Panel** - Full user, course, and review moderation capabilities
+- **Modern UI** - ChaiCode-inspired dark theme with smooth animations
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Authentication**: Clerk
+- **Database**: MongoDB with Mongoose
+- **Styling**: Tailwind CSS v4
+- **UI Components**: Radix UI + shadcn/ui
+- **Validation**: Zod
+- **Forms**: React Hook Form
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ or Bun
+- MongoDB instance (local or MongoDB Atlas)
+- Clerk account
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+# MongoDB
+MONGODB_URI=mongodb+srv://...
+
+# Clerk Authentication
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_...
+CLERK_SECRET_KEY=sk_...
+CLERK_WEBHOOK_SECRET=whsec_... (optional, for webhooks)
+
+# Clerk URLs (optional, have defaults)
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+
+# App Configuration (optional)
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+# Install dependencies
+bun install
+
+# Run development server
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+├── app/                  # Next.js App Router pages
+│   ├── (auth)/          # Auth pages (sign-in, sign-up)
+│   ├── (dashboard)/     # Dashboard pages (admin, creator, student)
+│   ├── api/             # API routes (webhooks)
+│   ├── courses/         # Course pages
+│   └── redeem/          # Access link redemption
+├── components/          # React components
+│   ├── courses/         # Course-related components
+│   ├── reviews/         # Review-related components
+│   ├── shared/          # Shared components (Navbar, Footer)
+│   └── ui/              # shadcn/ui components
+├── lib/                 # Utilities and server logic
+│   ├── actions/         # Server Actions
+│   ├── db/              # Database models and connection
+│   ├── auth-helpers.ts  # Authentication utilities
+│   ├── constants.ts     # App constants
+│   ├── env.ts           # Environment validation
+│   └── types.ts         # TypeScript types
+└── public/              # Static assets
+```
 
-## Learn More
+## 👥 User Roles
 
-To learn more about Next.js, take a look at the following resources:
+| Role | Capabilities |
+|------|-------------|
+| **Student** | Browse courses, redeem access links, write reviews |
+| **Creator** | Create courses, generate access links, moderate reviews |
+| **Admin** | Full access: manage users, courses, and all reviews |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔗 Key Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### For Students
+1. Receive access link from course creator
+2. Redeem link to verify course enrollment
+3. Write detailed reviews with ratings
 
-## Deploy on Vercel
+### For Creators
+1. Add courses to the platform
+2. Generate unique access links for students
+3. Moderate reviews on their courses
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### For Admins
+1. Manage all users and roles
+2. Delete courses if needed
+3. Moderate all reviews platform-wide
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📝 License
+
+MIT © 2026
