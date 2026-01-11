@@ -100,14 +100,14 @@ export default async function CoursesPage({ searchParams }: PageProps) {
   const sort = (params.sort as 'newest' | 'rating' | 'reviews') || 'newest';
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
       <Navbar />
       
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Browse Courses</h1>
-          <p className="text-white/50">
+          <h1 className="text-3xl font-bold text-foreground mb-2">Browse Courses</h1>
+          <p className="text-muted-foreground">
             Discover courses with authentic reviews from real students
           </p>
         </div>
