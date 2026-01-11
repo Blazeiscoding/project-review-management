@@ -251,3 +251,66 @@ export async function getStudentAccessibleCourses() {
     return { courses: [] };
   }
 }
+
+export async function createBulkAccessLinks(data: {
+  courseId: string;
+  count: number;
+  maxUsesPerLink?: number;
+}) {
+  try {
+    const { userId } = await auth();
+    
+    if (!userId) {
+      return { error: 'Unauthorized' };
+    }
+
+    if (data.count < 1 || data.count > 100) {
+      return { error: 'Count must be between 1 and 100' };
+    }
+
+    await connectDB();
+
+    const user = await User.findOne({ clerkId: userId });
+    
+    if (!user || user.role !== 'creator') {
+      return { error: 'Unauthorized - Creator access required' };
+    }
+
+    // Verify course ownership
+    const course = await Course.findById(data.courseId);
+    
+    if (!course) {
+      return { error: 'Course not found' };
+    }
+
+    if (course.creator.toString() !== user._id.toString()) {
+      return { error: 'Unauthorized - Not the course owner' };
+    }
+
+    // Create multiple access links
+    const links: { code: string; url: string }[] = [];
+    for (let i = 0; i < data.count; i++) {
+      const link = await AccessLink.create({
+        course: data.courseId,
+        code: nanoid(10),
+        maxUses: data.maxUsesPerLink || 1,
+        createdBy: user._id,
+      });
+      links.push({
+        code: link.code,
+        url: `/redeem/${link.code}`,
+      });
+    }
+
+    revalidatePath('/creator');
+    
+    return { 
+      success: true, 
+      links,
+      csv: links.map(l => l.url).join('\n'),
+    };
+  } catch (error) {
+    console.error('Create bulk access links error:', error);
+    return { error: 'Failed to create bulk access links' };
+  }
+}

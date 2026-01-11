@@ -29,6 +29,10 @@ export interface IReview extends Document {
   content: string;
   images: string[];
   status: 'pending' | 'approved' | 'rejected';
+  creatorReply?: {
+    content: string;
+    createdAt: Date;
+  };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -77,6 +81,10 @@ const ReviewSchema = new Schema<IReview>(
       enum: ['pending', 'approved', 'rejected'], 
       default: 'pending',
       index: true
+    },
+    creatorReply: {
+      content: { type: String, trim: true },
+      createdAt: { type: Date },
     },
   },
   { timestamps: true }

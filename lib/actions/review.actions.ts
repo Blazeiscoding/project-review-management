@@ -311,3 +311,115 @@ export async function checkReviewAccess(courseId: string) {
     return { hasAccess: false, hasReviewed: false };
   }
 }
+
+export async function replyToReview(reviewId: string, content: string) {
+  try {
+    const { userId } = await auth();
+    
+    if (!userId) {
+      return { error: 'Unauthorized' };
+    }
+
+    if (!content || content.trim().length < 5) {
+      return { error: 'Reply must be at least 5 characters' };
+    }
+
+    if (content.length > 1000) {
+      return { error: 'Reply is too long (max 1000 characters)' };
+    }
+
+    await connectDB();
+
+    const user = await User.findOne({ clerkId: userId });
+    
+    if (!user || (user.role !== 'creator' && user.role !== 'admin')) {
+      return { error: 'Only creators can reply to reviews' };
+    }
+
+    const review = await Review.findById(reviewId).populate('course');
+    
+    if (!review) {
+      return { error: 'Review not found' };
+    }
+
+    // Verify ownership (creator of the course)
+    const course = await Course.findById(review.course);
+    
+    if (!course) {
+      return { error: 'Course not found' };
+    }
+
+    if (course.creator.toString() !== user._id.toString() && user.role !== 'admin') {
+      return { error: 'Only the course creator can reply to this review' };
+    }
+
+    // Update review with reply
+    review.creatorReply = {
+      content: content.trim(),
+      createdAt: new Date(),
+    };
+    await review.save();
+
+    revalidatePath(`/courses/${course._id}`);
+    revalidatePath('/creator');
+    
+    return { success: true };
+  } catch (error) {
+    console.error('Reply to review error:', error);
+    return { error: 'Failed to reply to review' };
+  }
+}
+
+export async function exportReviewsCSV(courseId: string) {
+  try {
+    const { userId } = await auth();
+    
+    if (!userId) {
+      return { error: 'Unauthorized' };
+    }
+
+    await connectDB();
+
+    const user = await User.findOne({ clerkId: userId });
+    
+    if (!user || (user.role !== 'creator' && user.role !== 'admin')) {
+      return { error: 'Unauthorized' };
+    }
+
+    const course = await Course.findById(courseId);
+    
+    if (!course) {
+      return { error: 'Course not found' };
+    }
+
+    if (course.creator.toString() !== user._id.toString() && user.role !== 'admin') {
+      return { error: 'Only the course creator can export reviews' };
+    }
+
+    const reviews = await Review.find({ course: courseId, status: 'approved' })
+      .populate('student', 'firstName lastName email')
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // Generate CSV content
+    const headers = ['Date', 'Reviewer', 'Email', 'Overall Rating', 'Instructor', 'Content', 'Value', 'Title', 'Review'];
+    const rows = reviews.map(r => [
+      new Date(r.createdAt).toISOString().split('T')[0],
+      `${(r.student as any)?.firstName || ''} ${(r.student as any)?.lastName || ''}`.trim(),
+      (r.student as any)?.email || '',
+      r.overallRating,
+      r.ratings.instructorQuality,
+      r.ratings.contentQuality,
+      r.ratings.valueForMoney,
+      `"${r.title.replace(/"/g, '""')}"`,
+      `"${r.content.replace(/"/g, '""')}"`,
+    ]);
+
+    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    
+    return { success: true, csv, filename: `${course.title.replace(/\s+/g, '_')}_reviews.csv` };
+  } catch (error) {
+    console.error('Export reviews error:', error);
+    return { error: 'Failed to export reviews' };
+  }
+}
